@@ -19,8 +19,8 @@ class SponsoredRecommendation extends BaseRecommendation {
     renderBranding() {
         return `
             <div class="taboola-branding">
-                ${this.branding}
-                <span class="taboola-origin">• Sponsored</span>
+                <span class="taboola-origin"> Sponsored | </span>
+                ${this.branding}   
             </div>
         `;
     }
