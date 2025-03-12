@@ -1,0 +1,19 @@
+TaboolaAdWidget/
+├── index.html
+├── README.md
+├── css/
+│   └── styles.css
+├── js/
+│   ├── main.js
+│   ├── config.js
+│   ├── services/
+│   │   └── RecommendationService.js
+│   ├── models/
+│   │   ├── BaseRecommendation.js
+│   │   ├── SponsoredRecommendation.js
+│   │   ├── OrganicRecommendation.js
+│   │   └── RecommendationFactory.js
+│   ├── ui/
+│   │   └── RecommendationWidget.js
+│   └── tests/
+│       └── WidgetTests.js
