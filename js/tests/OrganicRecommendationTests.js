@@ -119,6 +119,66 @@ class OrganicRecommendationTests {
                 category: "Video - Taboola Insights",
                 created: "Wed, 12 Mar 2025 09:45:00 UTC",
                 views: "1876"
+            },
+            {
+                id: "organic-taboola-6",
+                type: "image",
+                url: "https://www.taboola.com/engineering/how-taboola-powers-the-conversion-data-pipe/",
+                title: "Taboola Insights: Understanding User Behavior",
+                description: "Data-driven research on user engagement and content discovery",
+                thumbnail: [
+                    {
+                        url: "https://www.taboola.com/wp-content/uploads-neo/2024/11/shutterstock_613464041-scaled-1.jpg",
+                        width: "800",
+                        height: "450"
+                    }
+                ],
+                name: "How Taboola Powers the Conversion Data Pipe",
+                branding: "Taboola Engineering - Big Data",
+                origin: "organic",
+                category: "Article - Engineering",
+                created: "Wed, 12 Mar 2025 09:45:00 UTC",
+                views: "1876"
+            },
+            {
+                id: "organic-taboola-7",
+                type: "image",
+                url: "https://www.taboola.com/engineering/deep-multi-task-learning-3-lessons-learned/",
+                title: "For the past year, my team and I have been working on a personalized user experience in the Taboola feed. We used Multi-Task Learning (MTL)",
+                description: "Data-driven research on user engagement and content discovery",
+                thumbnail: [
+                    {
+                        url: "https://www.taboola.com/wp-content/uploads-neo/2024/12/mtl_robot.jpeg",
+                        width: "800",
+                        height: "450"
+                    }
+                ],
+                name: "Deep Multi-Task Learning – 3 Lessons Learned",
+                branding: "Taboola Engineering - Machine Learning",
+                origin: "organic",
+                category: "Article - Engineering",
+                created: "Wed, 12 Mar 2025 09:45:00 UTC",
+                views: "1876"
+            },
+            {
+                id: "organic-taboola-8",
+                type: "image",
+                url: "https://www.taboola.com/engineering/we-have-only-just-begun/",
+                title: "We Have Only Just Begun: A Message from Our SVP of Research & Development",
+                description: "Data-driven research on user engagement and content discovery",
+                thumbnail: [
+                    {
+                        url: "https://www.taboola.com/wp-content/uploads-neo/2024/12/Untitled.jpeg",
+                        width: "800",
+                        height: "450"
+                    }
+                ],
+                name: "We Have Only Just Begun: A Message from Our SVP of Research & Development",
+                branding: "Taboola Engineering - Culture",
+                origin: "organic",
+                category: "Article - Culture",
+                created: "Wed, 12 Mar 2025 09:45:00 UTC",
+                views: "1876"
             }
         ];
         
