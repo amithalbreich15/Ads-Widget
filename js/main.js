@@ -9,27 +9,37 @@ function openVideoPopup(videoUrl) {
     // Clear any previous content
     videoElement.innerHTML = "";
 
+    let embedUrl = "";
+
     // Handle YouTube videos
-    if (videoUrl.includes("youtube.com")) {
-        const videoId = videoUrl.split("watch?v=")[1]?.split("&")[0];
-        videoElement.innerHTML = `<iframe width="100%" height="100%" 
-            src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+        let videoId = "";
+        if (videoUrl.includes("watch?v=")) {
+            videoId = videoUrl.split("watch?v=")[1]?.split("&")[0];
+        } else if (videoUrl.includes("youtu.be/")) {
+            videoId = videoUrl.split("youtu.be/")[1]?.split("?")[0];
+        }
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1`;
     }
     // Handle Vimeo videos
     else if (videoUrl.includes("vimeo.com")) {
         const vimeoId = videoUrl.split("/").pop();
-        console.log(vimeoId);
-        videoElement.innerHTML = `<iframe width="100%" height="100%" 
-            src="https://player.vimeo.com/video/${vimeoId}?autoplay=1" 
-            frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        embedUrl = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&playsinline=1`;
     }
     // Handle direct video files
     else {
-        videoElement.innerHTML = `<video controls autoplay style="width:100%; height:100%">
+        videoElement.innerHTML = `<video controls autoplay style="width:100%; height:auto; max-height:90vh;">
             <source src="${videoUrl}" type="video/mp4">
             Your browser does not support the video tag.
         </video>`;
+    }
+
+    // If embedding YouTube or Vimeo, use an iframe
+    if (embedUrl) {
+        videoElement.innerHTML = `<iframe width="100%" height="100%" 
+            src="${embedUrl}" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen playsinline></iframe>`;
     }
 
     // Show the popup
@@ -59,6 +69,7 @@ function closeVideoPopup() {
     // Hide the popup
     popup.style.display = "none";
 }
+
 
 
 /**
