@@ -29,6 +29,8 @@ class WidgetTestsExtended extends WidgetTests {
         await this.testNetworkPerformance();
         await this.testCrossOriginResources();
         await this.testContentAccessibility();
+        await this.testAdHrefLinks();
+        await this.testRedirections();
         
         // Display all results in the desired format
         this.displayResults('Extended Test Results:');
@@ -305,6 +307,161 @@ class WidgetTestsExtended extends WidgetTests {
             return false;
         }
     }
+
+    /**
+     * Test that all ad href links exist and are properly formatted
+     */
+    async testAdHrefLinks() {
+        try {
+            // Find all recommendation items
+            const items = document.querySelectorAll('.taboola-item');
+            let invalidLinks = 0;
+            let missingLinks = 0;
+            let details = [];
+            
+            // Check each item to see if it's properly clickable
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                
+                // In a real implementation, the entire item should be clickable
+                // or wrapped in an anchor tag, or have JavaScript click handlers
+                
+                // Method 1: Check if the item is wrapped in an anchor
+                const parentAnchor = item.closest('a');
+                
+                // Method 2: Check if the item has a data-id that could be used for click tracking
+                const hasDataId = item.hasAttribute('data-id') && item.getAttribute('data-id') !== '';
+                
+                // Method 3: Check if clicking the item navigates somewhere (simulated)
+                const hasClickHandler = this.hasClickEventListener(item);
+                
+                if (!parentAnchor && !hasClickHandler) {
+                    missingLinks++;
+                    details.push(`Item ${i+1}: No clickable element found`);
+                } else if (parentAnchor && !parentAnchor.href) {
+                    invalidLinks++;
+                    details.push(`Item ${i+1}: Anchor has empty href`);
+                } else if (parentAnchor) {
+                    // Validate URL format
+                    try {
+                        new URL(parentAnchor.href);
+                    } catch (e) {
+                        invalidLinks++;
+                        details.push(`Item ${i+1}: Invalid URL format: ${parentAnchor.href}`);
+                    }
+                }
+            }
+            
+            const result = missingLinks === 0 && invalidLinks === 0;
+            
+            this.addResult('Ad Href Links', result, 
+                result ? 'All recommendation items have valid clickable links' : 
+                `Issues found: ${missingLinks} items missing links, ${invalidLinks} invalid links${details.length > 0 ? '. Details: ' + details.join('; ') : ''}`);
+            
+            return result;
+        } catch (error) {
+            this.addResult('Ad Href Links', false, `Error: ${error.message}`);
+            return false;
+        }
+    }
+
+    /**
+     * Helper method to check if an element has click event listeners
+     * Note: This is not 100% reliable due to browser security restrictions
+     */
+    hasClickEventListener(element) {
+        // Method 1: Check inline onclick attribute
+        if (element.hasAttribute('onclick')) {
+            return true;
+        }
+        
+        // Method 2: Check if the element has a role="button" attribute
+        if (element.getAttribute('role') === 'button') {
+            return true;
+        }
+        
+        // Method 3: Check for CSS cursor style that suggests clickability
+        const style = window.getComputedStyle(element);
+        if (style.cursor === 'pointer') {
+            return true;
+        }
+        
+        // Check children for clickable elements
+        for (const child of element.children) {
+            if (child.tagName === 'A' || this.hasClickEventListener(child)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Test that redirections work properly for Taboola recommendation links
+     */
+    async testRedirections() {
+        try {
+            // Get all recommendation items
+            const items = document.querySelectorAll('.taboola-item');
+            
+            if (items.length === 0) {
+                this.addResult('Redirections', false, 'No recommendation items found on the page');
+                return false;
+            }
+            
+            let validRedirects = 0;
+            let invalidRedirects = 0;
+            let invalidItems = [];
+            
+            for (const item of items) {
+                // Get the recommendation ID
+                const itemId = item.getAttribute('data-id');
+                
+                if (!itemId) {
+                    invalidRedirects++;
+                    invalidItems.push('Missing data-id attribute');
+                    continue;
+                }
+                
+                // Check if the item is clickable
+                const hasEvents = item.getAttribute('data-has-events') === 'true';
+                
+                // Since we can't test actual navigation in an automated test,
+                // we'll verify the item has the correct structure for redirection
+                
+                // In the provided HTML, items aren't wrapped in anchor tags
+                // so we need to check if they have the data attributes needed for client-side navigation
+                const isRecommendationItem = item.getAttribute('data-test') === 'recommendation-item';
+                
+                if (isRecommendationItem && hasEvents && itemId.length > 0) {
+                    // Verify the item ID format matches Taboola's format (contains tildes and hyphens)
+                    const hasValidIdFormat = /~~.*~~/.test(itemId);
+                    
+                    if (hasValidIdFormat) {
+                        validRedirects++;
+                    } else {
+                        invalidRedirects++;
+                        invalidItems.push(`Invalid ID format: ${itemId}`);
+                    }
+                } else {
+                    invalidRedirects++;
+                    invalidItems.push(`Item missing required attributes: ${itemId || 'unknown'}`);
+                }
+            }
+            
+            const allValid = invalidRedirects === 0;
+            
+            this.addResult('Redirections', allValid, 
+                allValid ? `All ${validRedirects} recommendation links have proper redirection configuration` : 
+                `Found ${invalidRedirects} recommendations with invalid redirection configuration: ${invalidItems.join(', ')}`);
+            
+            return allValid;
+        } catch (error) {
+            this.addResult('Redirections', false, `Error testing redirections: ${error.message}`);
+            return false;
+        }
+    }
+
 
     /**
      * Add a test result to the results array

@@ -67,7 +67,7 @@ p {
 }
 
 .taboola-logo {
-    height: 36px; /* Match the font size */
+    height: 36px;
     margin-left: 5px;
     vertical-align: middle;
 }
@@ -87,6 +87,7 @@ p {
 
 .privacy-label svg {
     display: block;
+    fill:#2980b9
 }
 
 .privacy-label:hover path {
@@ -234,4 +235,73 @@ p {
 
 .test-button:hover {
     background-color: #2980b9;
+}
+
+/* Video modal styles - hidden by default */
+/* Fullscreen Video Modal */
+.video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Centered Video Player */
+.video-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background-color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Close Button */
+.video-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Ensures Video Fills the Container */
+#videoElement {
+    width: 100%;
+    height: 500px;
+}
+
+/* Play Button Overlay for Thumbnails */
+.video-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-play-icon::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 18px solid white;
+    border-bottom: 10px solid transparent;
+    margin-left: 3px;
 }
