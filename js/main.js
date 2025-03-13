@@ -1,4 +1,12 @@
 /**
+ * Detects if the user is on a mobile device
+ * @returns {boolean} True if mobile, false if desktop
+ */
+function isMobileDevice() {
+    return window.innerWidth <= 768; // Adjust breakpoint if needed
+}
+
+/**
  * Opens a modal popup to play a video in full size
  * @param {string} videoUrl - The URL of the video
  */
@@ -6,10 +14,11 @@ function openVideoPopup(videoUrl) {
     const popup = document.getElementById("videoPopup");
     const videoElement = document.getElementById("videoElement");
 
-    // Clear any previous content
+    // Clear previous content
     videoElement.innerHTML = "";
 
     let embedUrl = "";
+    let isMobile = isMobileDevice();
 
     // Handle YouTube videos
     if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
@@ -28,7 +37,7 @@ function openVideoPopup(videoUrl) {
     }
     // Handle direct video files
     else {
-        videoElement.innerHTML = `<video controls autoplay style="width:100%; height:auto; max-height:90vh;">
+        videoElement.innerHTML = `<video controls autoplay ${isMobile ? 'style="width:100%; height:auto;"' : 'style="width:100%; height:500px;"'}>
             <source src="${videoUrl}" type="video/mp4">
             Your browser does not support the video tag.
         </video>`;
@@ -36,7 +45,8 @@ function openVideoPopup(videoUrl) {
 
     // If embedding YouTube or Vimeo, use an iframe
     if (embedUrl) {
-        videoElement.innerHTML = `<iframe width="100%" height="100%" 
+        videoElement.innerHTML = `<iframe 
+            ${isMobile ? 'width="100%" height="250px"' : 'width="100%" height="500px"'}
             src="${embedUrl}" 
             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen playsinline></iframe>`;
@@ -54,6 +64,20 @@ function openVideoPopup(videoUrl) {
             closeVideoPopup();
         }
     });
+}
+
+/**
+ * Closes the video popup
+ */
+function closeVideoPopup() {
+    const popup = document.getElementById("videoPopup");
+    const videoElement = document.getElementById("videoElement");
+
+    // Clear video source to stop playback
+    videoElement.innerHTML = "";
+
+    // Hide the popup
+    popup.style.display = "none";
 }
 
 /**
