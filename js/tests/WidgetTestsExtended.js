@@ -396,71 +396,71 @@ class WidgetTestsExtended extends WidgetTests {
         return false;
     }
 
-    /**
-     * Test that redirections work properly for Taboola recommendation links
-     */
-    async testRedirections() {
-        try {
-            // Get all recommendation items
-            const items = document.querySelectorAll('.taboola-item');
-            
-            if (items.length === 0) {
-                this.addResult('Redirections', false, 'No recommendation items found on the page');
-                return false;
-            }
-            
-            let validRedirects = 0;
-            let invalidRedirects = 0;
-            let invalidItems = [];
-            
-            for (const item of items) {
-                // Get the recommendation ID
-                const itemId = item.getAttribute('data-id');
-                
-                if (!itemId) {
-                    invalidRedirects++;
-                    invalidItems.push('Missing data-id attribute');
-                    continue;
-                }
-                
-                // Check if the item is clickable
-                const hasEvents = item.getAttribute('data-has-events') === 'true';
-                
-                // Since we can't test actual navigation in an automated test,
-                // we'll verify the item has the correct structure for redirection
-                
-                // In the provided HTML, items aren't wrapped in anchor tags
-                // so we need to check if they have the data attributes needed for client-side navigation
-                const isRecommendationItem = item.getAttribute('data-test') === 'recommendation-item';
-                
-                if (isRecommendationItem && hasEvents && itemId.length > 0) {
-                    // Verify the item ID format matches Taboola's format (contains tildes and hyphens)
-                    const hasValidIdFormat = /~~.*~~/.test(itemId);
-                    
-                    if (hasValidIdFormat) {
-                        validRedirects++;
-                    } else {
-                        invalidRedirects++;
-                        invalidItems.push(`Invalid ID format: ${itemId}`);
-                    }
-                } else {
-                    invalidRedirects++;
-                    invalidItems.push(`Item missing required attributes: ${itemId || 'unknown'}`);
-                }
-            }
-            
-            const allValid = invalidRedirects === 0;
-            
-            this.addResult('Redirections', allValid, 
-                allValid ? `All ${validRedirects} recommendation links have proper redirection configuration` : 
-                `Found ${invalidRedirects} recommendations with invalid redirection configuration: ${invalidItems.join(', ')}`);
-            
-            return allValid;
-        } catch (error) {
-            this.addResult('Redirections', false, `Error testing redirections: ${error.message}`);
+/**
+ * Test that redirections work properly for Taboola recommendation links
+ */
+async testRedirections() {
+    try {
+        // Get all recommendation items
+        const items = document.querySelectorAll('.taboola-item');
+        
+        if (items.length === 0) {
+            this.addResult('Redirections', false, 'No recommendation items found on the page');
             return false;
         }
+        
+        let validRedirects = 0;
+        let invalidRedirects = 0;
+        let invalidItems = [];
+        
+        for (const item of items) {
+            // Get the recommendation ID
+            const itemId = item.getAttribute('data-id');
+            
+            if (!itemId) {
+                invalidRedirects++;
+                invalidItems.push('Missing data-id attribute');
+                continue;
+            }
+            
+            // Check if the item is clickable
+            const hasEvents = item.getAttribute('data-has-events') === 'true';
+            
+            // Since we can't test actual navigation in an automated test,
+            // we'll verify the item has the correct structure for redirection
+            
+            // In the provided HTML, items aren't wrapped in anchor tags
+            // so we need to check if they have the data attributes needed for client-side navigation
+            const isRecommendationItem = item.getAttribute('data-test') === 'recommendation-item';
+            
+            if (isRecommendationItem && hasEvents && itemId.length > 0) {
+                // Verify the item ID format matches Taboola's format (contains tildes and hyphens)
+                const hasValidIdFormat = /~~.*~~/.test(itemId);
+                
+                if (hasValidIdFormat) {
+                    validRedirects++;
+                } else {
+                    invalidRedirects++;
+                    invalidItems.push(`Invalid ID format: ${itemId}`);
+                }
+            } else {
+                invalidRedirects++;
+                invalidItems.push(`Item missing required attributes: ${itemId || 'unknown'}`);
+            }
+        }
+        
+        const allValid = invalidRedirects === 0;
+        
+        this.addResult('Redirections', allValid, 
+            allValid ? `All ${validRedirects} recommendation links have proper redirection configuration` : 
+            `Found ${invalidRedirects} recommendations with invalid redirection configuration: ${invalidItems.join(', ')}`);
+        
+        return allValid;
+    } catch (error) {
+        this.addResult('Redirections', false, `Error testing redirections: ${error.message}`);
+        return false;
     }
+}
 
 
     /**

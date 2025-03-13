@@ -319,21 +319,17 @@ class OrganicRecommendationTests {
     mockTaboolaAPI() {
         const mockData = this.createMockTaboolaData();
         return mockData;
-        return {
-            ok: true,
-            json: async () => mockData
-        };
         
-        // Mock the fetch function
-        window.fetch = async (url) => {
-            console.log(`Mocked API call to: ${url}`);
-            return {
-                ok: true,
-                json: async () => mockData
-            };
-        };
+        // // Mock the fetch function
+        // window.fetch = async (url) => {
+        //     console.log(`Mocked API call to: ${url}`);
+        //     return {
+        //         ok: true,
+        //         json: async () => mockData
+        //     };
+        // };
         
-        return mockData;
+        // return mockData;
     }
     
     /**

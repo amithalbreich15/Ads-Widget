@@ -15,5 +15,8 @@ TaboolaAdWidget/
 │   │   └── RecommendationFactory.js
 │   ├── ui/
 │   │   └── RecommendationWidget.js
+|   |   └── MockRecommendationWidget.js
 │   └── tests/
 │       └── WidgetTests.js
+|       └── OrganicRecommendationTests.js
+|       └── WidgetTestsExtended.js

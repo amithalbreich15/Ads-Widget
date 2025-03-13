@@ -32,6 +32,8 @@ TaboolaAdWidget/
 │   │   └── RecommendationWidget.js   # UI controller for the widget
 │   └── tests/
 │       └── WidgetTests.js            # Tests for widget functionality
+|       └── OrganicRecommendationTests.js
+|       └── WidgetTestsExtended.js
 ```
 
 ## How to Run
