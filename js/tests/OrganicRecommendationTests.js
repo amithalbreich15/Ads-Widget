@@ -19,7 +19,7 @@ class OrganicRecommendationTests {
         // Create mock response ID that matches Taboola format
         const responseId = "_1573fb36d694201d340f1381310c9eac65991d22e203f99802df4a38bb2fa3e4~V15923758711534103511PwN1EOKxggKFBWXnDS2hBKP9W9b5SOUSJ5w2VOcNB3R_IyVF-PUMhnzhEnt6YC709ch5D-rQaOj4yk9c-8GzA93dMQi63Jan54enSgBywwhpKDv3mGwJ4J16jNvceTQd0Hsvo8A8-cMJaEI98_kehq4iCsKsZ0JV1fZ1zxVlfpT3Mw4gT-xZv9WbB44cwmhwjpE6wwaQwVKhWy50dN4itA";
         
-        // Create 4 mock organic recommendations with actual Taboola links
+        // Create 8 mock organic recommendations with actual Taboola links
         const organicItems = [
             {
                 id: "organic-taboola-1",
@@ -83,6 +83,7 @@ class OrganicRecommendationTests {
             },
             {
                 id: "organic-taboola-4",
+                type: "image",
                 url: "https://www.taboola.com/engineering/real-traffic-ci/",
                 title: "Video Advertising Trends for 2025",
                 description: "Latest video trends and best practices for advertisers",
@@ -182,10 +183,11 @@ class OrganicRecommendationTests {
             }
         ];
         
-        // Create 4 mock sponsored recommendations with actual Taboola links
+        // Create 6 mock sponsored recommendations with actual Taboola links
         const sponsoredItems = [
             {
                 id: "sponsored-taboola-1",
+                type: "image",
                 url: "https://www.taboola.com/engineering/sdk-testing-with-hot-swapper/",
                 title: "SDK testing with hot swapper",
                 description: "Drive conversions with native advertising that works",
@@ -205,6 +207,7 @@ class OrganicRecommendationTests {
             },
             {
                 id: "sponsored-taboola-2",
+                type: "image",
                 url: "https://www.taboola.com/engineering/tis-season-fun-decision-trees/",
                 title: "Boost Your Site Revenue with Taboola",
                 description: "Leading publishers trust Taboola for monetization",
@@ -224,6 +227,7 @@ class OrganicRecommendationTests {
             },
             {
                 id: "sponsored-taboola-3",
+                type: "image",
                 url: "https://www.taboola.com/engineering/android-working-on-a-multiple-library-project/",
                 title: "Android Working On A Multiple Library Project",
                 description: "Captivate audiences with premium video content",
@@ -243,6 +247,7 @@ class OrganicRecommendationTests {
             },
             {
                 id: "sponsored-taboola-4",
+                type: "image",
                 url: "https://www.taboola.com/engineering/utilizing-llms-for-localized-recommendations/",
                 title: "Utilizing LLMs for Localized Recommendations",
                 description: "o you ever go to a local boutique brewery and buy a Carlsberg? Drive to your local farmer to buy Walmart packaged tomatoes? Of course not. You want to get a local experience, beer that is brewed from your neighboring produce. News is no different. When browsing your hometown’s news site, you hope to find uniquely related articles.",
@@ -257,6 +262,46 @@ class OrganicRecommendationTests {
                 branding: "Taboola Engineering - Machine Learning",
                 origin: "sponsored",
                 category: "Marketing",
+                created: "Wed, 12 Mar 2025 15:45:00 UTC",
+                views: "3124"
+            },
+            {
+                id: "sponsored-taboola-5",
+                type: "image",
+                url: "https://www.taboola.com/engineering/using-uncertainty-interpret-model/",
+                title: "Using Uncertainty to Interpret your Model",
+                description: "Do you ever go to a local boutique brewery and buy a Carlsberg? Drive to your local farmer to buy Walmart packaged tomatoes? Of course not. You want to get a local experience, beer that is brewed from your neighboring produce. News is no different. When browsing your hometown’s news site, you hope to find uniquely related articles.",
+                thumbnail: [
+                    {
+                        url: "https://www.taboola.com/wp-content/uploads-neo/2024/12/uncertainty-post-1-featured.jpeg",
+                        width: "800",
+                        height: "450"
+                    }
+                ],
+                name: "Using Uncertainty to Interpret your Model",
+                branding: "Taboola Engineering - Data Science",
+                origin: "sponsored",
+                category: "Article - Taboola Engineering",
+                created: "Wed, 12 Mar 2025 15:45:00 UTC",
+                views: "3124"
+            },
+            {
+                id: "sponsored-taboola-6",
+                type: "image",
+                url: "https://www.taboola.com/engineering/optimizing-ad-space-through-mixing-organic-items-in-the-open-web/",
+                title: "Optimizing Ad Space Through Mixing Organic Items In The Open Web",
+                description: "Introduction Taboola is the world’s leading native advertising platform, serving thousands of websites with a diverse array of products, including the Taboola Feed, mid-article ads, and homepage personalization, generating hundreds of millions of impressions daily. Despite our relentless efforts to optimize performance through sophisticated features, advanced models, and robust infrastructure, navigating such intricate ecosystems inevitably unveils areas of sub-optimization.",
+                thumbnail: [
+                    {
+                        url: "https://www.taboola.com/wp-content/uploads-neo/2024/11/shutterstock_2466308631__281_29-scaled-1.jpg",
+                        width: "800",
+                        height: "450"
+                    }
+                ],
+                name: "Optimizing Ad Space Through Mixing Organic Items In The Open Web",
+                branding: "Taboola Engineering - Data Science",
+                origin: "sponsored",
+                category: "Article - Taboola Engineering",
                 created: "Wed, 12 Mar 2025 15:45:00 UTC",
                 views: "3124"
             }
