@@ -323,3 +323,79 @@ p {
     border-bottom: 10px solid transparent;
     margin-left: 3px;
 }
+
+/* Mobile-Specific Pagination */
+.pagination-mobile {
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Desktop-Specific Pagination */
+.pagination-desktop {
+    justify-content: space-between;
+}
+
+/* Pagination Button Styles */
+.pagination-arrow {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0073e6;
+    padding: 8px 12px;
+    transition: background 0.2s ease-in-out;
+}
+
+.pagination-arrow:hover {
+    background: rgba(0, 115, 230, 0.1);
+    border-radius: 4px;
+}
+
+.pagination-arrow:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .pagination-controls {
+        padding: 12px;
+    }
+
+    .pagination-arrow {
+        font-size: 18px;
+    }
+}
+
+/* Pagination Controls */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.pagination-controls button {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+

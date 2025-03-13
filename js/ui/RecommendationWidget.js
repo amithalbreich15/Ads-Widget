@@ -1,6 +1,6 @@
 /**
  * RecommendationWidget
- * Controls the entire widget UI and functionality
+ * Controls the entire widget UI and functionality with pagination
  */
 class RecommendationWidget {
     /**
@@ -11,12 +11,15 @@ class RecommendationWidget {
      */
     constructor(containerId, service, factory) {
         this.container = document.getElementById(containerId);
-        this.contentContainer = document.getElementById('taboolaContent');
+        this.contentContainer = document.getElementById("taboolaContent");
+        this.paginationContainer = document.getElementById("paginationControls");
         this.service = service;
         this.factory = factory;
         this.recommendations = [];
+        this.itemsPerPage = 8;
+        this.currentPage = 1;
     }
-    
+
     /**
      * Initializes the widget
      */
@@ -27,48 +30,80 @@ class RecommendationWidget {
             this.processRecommendations(data);
             this.render();
         } catch (error) {
-            this.showError('Failed to load recommendations. Please try again later.');
+            this.showError("Failed to load recommendations. Please try again later.");
         }
     }
-    
+
     /**
      * Processes the raw API data into recommendation objects
      * @param {Object} data - Raw data from the API
      */
     processRecommendations(data) {
         if (!data || !data.list || !Array.isArray(data.list)) {
-            throw new Error('Invalid data format');
+            throw new Error("Invalid data format");
         }
-        
-        this.recommendations = data.list.map(item => this.factory.createRecommendation(item));
+
+        this.recommendations = data.list.map((item) => this.factory.createRecommendation(item));
     }
-    
+
     /**
-     * Renders the recommendations to the DOM
+     * Renders the recommendations with pagination
      */
     render() {
         if (this.recommendations.length === 0) {
-            this.showError('No recommendations available.');
+            this.showError("No recommendations available.");
             return;
         }
-        
+
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const itemsToDisplay = this.recommendations.slice(startIndex, endIndex);
+
         const html = `
             <div class="taboola-grid" data-test="recommendations-grid">
-                ${this.recommendations.map(rec => rec.renderHtml()).join('')}
+                ${itemsToDisplay.map((rec) => rec.renderHtml()).join("")}
             </div>
         `;
-        
+
         this.contentContainer.innerHTML = html;
-        
+        this.setupPaginationControls();
+
         // Attach event listeners
-        this.recommendations.forEach((rec, index) => {
+        itemsToDisplay.forEach((rec) => {
             const element = this.contentContainer.querySelector(`.taboola-item[data-id="${rec.id}"]`);
             if (element) {
                 rec.attachEvents(element);
             }
         });
     }
-    
+
+    /**
+     * Sets up pagination controls
+     */
+    setupPaginationControls() {
+        const totalPages = Math.ceil(this.recommendations.length / this.itemsPerPage);
+        if (totalPages <= 1) {
+            this.paginationContainer.innerHTML = "";
+            return;
+        }
+
+        this.paginationContainer.innerHTML = `
+            <button id="prevPage" ${this.currentPage === 1 ? "disabled" : ""}>Previous</button>
+            <span>Page ${this.currentPage} of ${totalPages}</span>
+            <button id="nextPage" ${this.currentPage === totalPages ? "disabled" : ""}>Next</button>
+        `;
+
+        document.getElementById("prevPage").addEventListener("click", () => {
+            this.currentPage--;
+            this.render();
+        });
+
+        document.getElementById("nextPage").addEventListener("click", () => {
+            this.currentPage++;
+            this.render();
+        });
+    }
+
     /**
      * Shows loading state
      */
@@ -80,7 +115,7 @@ class RecommendationWidget {
             </div>
         `;
     }
-    
+
     /**
      * Shows error state
      * @param {string} message - Error message to display
@@ -93,111 +128,3 @@ class RecommendationWidget {
         `;
     }
 }
-
-
-/**
- * RecommendationWidget
- * Controls the entire widget UI and functionality
- */
-// class RecommendationWidget {
-//     /**
-//      * Constructor
-//      * @param {string} containerId - ID of the container element
-//      * @param {RecommendationService} service - Service for fetching recommendations
-//      * @param {RecommendationFactory} factory - Factory for creating recommendation objects
-//      */
-//     constructor(containerId, service, factory) {
-//         this.container = document.getElementById(containerId);
-//         this.contentContainer = document.getElementById('taboolaContent');
-//         this.service = service;
-//         this.factory = factory;
-//         this.recommendations = [];
-//     }
-    
-//     /**
-//      * Initializes the widget
-//      * Uses mock data from OrganicRecommendationTests.js
-//      */
-//     async initialize() {
-//         try {
-//             this.showPlaceholderRecommendations(); // Step 1: Show placeholders
-
-//             // Step 2: Use mock API data from OrganicRecommendationTests.js
-//             const mockTest = new OrganicRecommendationTests(this, this.service);
-//             const mockData = mockTest.mockTaboolaAPI();
-
-//             // Step 3: Process and render recommendations
-//             this.processRecommendations(mockData);
-//             this.render();
-//         } catch (error) {
-//             this.showError('Failed to load recommendations. Please try again later.');
-//         }
-//     }
-    
-//     /**
-//      * Processes the raw API data into recommendation objects
-//      * @param {Object} data - Raw data from the API (mock in this case)
-//      */
-//     processRecommendations(data) {
-//         if (!data || !data.list || !Array.isArray(data.list)) {
-//             throw new Error('Invalid data format');
-//         }
-        
-//         // Filter only organic recommendations
-//         this.recommendations = data.list
-//             // .filter(item => item.origin === "organic")
-//             .map(item => this.factory.createRecommendation(item));
-//     }
-    
-//     /**
-//      * Renders the recommendations to the DOM
-//      */
-//     render() {
-//         if (this.recommendations.length === 0) {
-//             this.showError('No recommendations available.');
-//             return;
-//         }
-        
-//         const html = `
-//             <div class="taboola-grid" data-test="recommendations-grid">
-//                 ${this.recommendations.map(rec => rec.renderHtml()).join('')}
-//             </div>
-//         `;
-        
-//         this.contentContainer.innerHTML = html;
-        
-//         // Attach event listeners
-//         this.recommendations.forEach((rec) => {
-//             const element = this.contentContainer.querySelector(`.taboola-item[data-id="${rec.id}"]`);
-//             if (element) {
-//                 rec.attachEvents(element);
-//             }
-//         });
-//     }
-
-//     /**
-//      * Displays placeholder recommendations while loading real data
-//      */
-//     showPlaceholderRecommendations() {
-//         const placeholders = Array(8).fill(`
-//             <div class="taboola-item placeholder">
-//                 <div class="taboola-thumbnail placeholder-thumbnail"></div>
-//                 <div class="taboola-caption placeholder-text"></div>
-//             </div>
-//         `).join('');
-        
-//         this.contentContainer.innerHTML = `<div class="taboola-grid">${placeholders}</div>`;
-//     }
-
-//     /**
-//      * Shows error state
-//      * @param {string} message - Error message to display
-//      */
-//     showError(message) {
-//         this.contentContainer.innerHTML = `
-//             <div class="taboola-error">
-//                 <div>${message}</div>
-//             </div>
-//         `;
-//     }
-// }
