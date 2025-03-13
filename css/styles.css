@@ -219,6 +219,10 @@ p {
 
 /* Test Button Styles */
 .test-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
@@ -229,13 +233,14 @@ p {
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: 10px;
     font-size: 14px;
+    /* transition: background 0.2s ease-in-out; */
 }
 
 .test-button:hover {
     background-color: #2980b9;
 }
+
 
 /* Video modal styles - hidden by default */
 /* Fullscreen Video Modal */
@@ -399,3 +404,27 @@ p {
     cursor: not-allowed;
 }
 
+/* Mobile-Specific Adjustments */
+@media screen and (max-width: 768px) {
+    .pagination-controls {
+        padding: 12px;
+        font-size: 14px;
+        justify-content: space-evenly;
+    }
+
+    .pagination-arrow {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .test-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .test-button {
+        width: 90%;
+        font-size: 16px;
+        text-align: center;
+    }
+}
