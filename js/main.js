@@ -95,7 +95,6 @@ function closeVideoPopup() {
 }
 
 
-
 /**
  * Main application entry point
  * Initializes the recommendation widget when the DOM is loaded
@@ -117,37 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     });
-
-    // /**
-    //  * Opens a modal popup to play a video
-    //  * @param {string} videoUrl - The URL of the video
-    //  */
-    // function openVideoPopup(videoUrl) {
-    //     const videoModal = document.getElementById("videoPopup");
-    //     const videoElement = document.getElementById("videoElement");
-
-    //     if (videoElement) {
-    //         videoElement.src = videoUrl;
-    //     }
-    //     if (videoModal) {
-    //         videoModal.style.display = "block";
-    //     }
-    // }
-
-    // /**
-    //  * Closes the video popup
-    //  */
-    // function closeVideoPopup() {
-    //     const videoModal = document.getElementById("videoPopup");
-    //     const videoElement = document.getElementById("videoElement");
-
-    //     if (videoElement) {
-    //         videoElement.src = ""; // Stop video playback
-    //     }
-    //     if (videoModal) {
-    //         videoModal.style.display = "none";
-    //     }
-    // }
 
     // Close popup when clicking outside of the video
     window.addEventListener("click", (event) => {
@@ -200,12 +168,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('runExtendedTestsButton')?.addEventListener('click', () => {
         tests.runExtendedTests();
     });
-
-    // Toggle between desktop and mobile views
-    document.getElementById('toggleDesktopMobile').addEventListener('click', () => {
-        config.deviceType = config.deviceType === 'desktop' ? 'mobile' : 'desktop';
-        document.getElementById('toggleDesktopMobile').textContent = 
-            `Toggle to ${config.deviceType === 'desktop' ? 'Mobile' : 'Desktop'} View`;
-        widget.initialize();
-    });
+    
 });
